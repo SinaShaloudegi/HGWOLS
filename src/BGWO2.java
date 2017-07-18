@@ -8,9 +8,6 @@ public class BGWO2 {
 
     int X[][];
     int numFeatures;
-    double C[];
-    double A[];
-    double d[];
     double fitness[];
     int a;
     int alpha, beta, delta;
@@ -80,7 +77,7 @@ public class BGWO2 {
 
     private void run() throws Exception {
 
-        for (int i = 0; i <20; i++) {
+        for (int i = 0; i < 20; i++) {
             a = 2 - (i * 2) / 20;
             for (int j = 0; j < X.length; j++) {
                 for (int k = 0; k < numFeatures; k++) {
@@ -111,6 +108,7 @@ public class BGWO2 {
                     X3 = Math.abs(X[delta][k] - A3 * D_delta);
                     X[j][k] = sigmoid((X1 + X2 + X3) / 3);
                 }
+                X[j] = refine(X[j]);
             }
 
 
@@ -152,7 +150,12 @@ public class BGWO2 {
 
             System.out.print(X[alpha][i] + ",");
         }
+        System.out.println();
         System.out.println(fit(X[alpha]));
+    }
+
+    private int[] refine(int[] x) {
+
     }
 
     private int sigmoid(double v) {
@@ -180,7 +183,7 @@ public class BGWO2 {
         String s = "";
         for (int i = 0; i < x.length; i++) {
             if (x[i] == 1) {
-                s += (  i+1 )+ ",";
+                s += (i + 1) + ",";
             }
 
         }
