@@ -1,3 +1,5 @@
+import weka.core.Instances;
+
 import java.util.Random;
 
 /**
@@ -12,16 +14,21 @@ public class BGWO2 {
     int a;
     int alpha, beta, delta;
     GWOFitCalculator gwoFitCalculator;
+    LocalSearchOperation localSearchOperation;
+    Instances data;
 
     public void startGWO2() throws Exception {
         String path = "C:\\Users\\sina\\Desktop\\LBS-Kurdestan\\BGWO1\\data\\hepatit.csv";
         gwoFitCalculator = new GWOFitCalculator(path);
+        data = gwoFitCalculator.getTrain();
         numFeatures = gwoFitCalculator.getNumFeatures();
         init();
         run();
     }
 
     private void init() throws Exception {
+        localSearchOperation = new LocalSearchOperation(data, 0.6, 6);
+        localSearchOperation.computeCorrelation();
         X = new int[10][numFeatures];
         fitness = new double[10];
         for (int i = 0; i < 10; i++) {
@@ -155,7 +162,16 @@ public class BGWO2 {
     }
 
     private int[] refine(int[] x) {
+        int[] temp = localSearchOperation.lso(x);
+        int counter = 0;
+        for (int i = 0; i < temp.length; i++) {
+            if (temp[i] == 1) {
+                counter++;
+            }
 
+        }
+        System.out.println(counter);
+        return temp;
     }
 
     private int sigmoid(double v) {

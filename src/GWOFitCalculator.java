@@ -91,4 +91,7 @@ public class GWOFitCalculator {
         return numFeatures;
     }
 
+    public Instances getTrain() {
+        return train;
+    }
 }
